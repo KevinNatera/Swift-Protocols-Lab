@@ -266,39 +266,17 @@ var message: String { get }
 
 public protocol ReflectedStringConvertible : CustomStringConvertible { }
 
-extension ReflectedStringConvertible {
-public var description: String {
-let mirror = Mirror(reflecting: self)
 
-var str = "\(mirror.subjectType)("
-var first = true
-for (label, value) in mirror.children {
-if let label = label {
-if first {
-first = false
-} else {
-str += ", "
-}
-str += label
-str += ": "
-str += "\(value)"
-}
-}
-str += ")"
 
-return str
-}
-}
-
-class Cat : Communication, ReflectedStringConvertible {
+class Cat : Communication {
 var message = "Meow!"
 }
 
-class Dog : Communication, ReflectedStringConvertible {
+class Dog : Communication {
 var message = "Woof!"
 }
 
-class Cow : Communication, ReflectedStringConvertible {
+class Cow : Communication {
 var message = "Moo!"
 }
 
@@ -307,11 +285,11 @@ var cat1 = Cat.init()
 var dog1 = Dog.init()
 var cow1 = Cow.init()
 
-var animals: [Any] = [cat1, dog1, cow1]
+var animals: [Communication] = [cat1, dog1, cow1]
 
 
 for i in animals {
-print(i)
+print(i.message)
 }
 
 ```
